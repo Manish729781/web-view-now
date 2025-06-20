@@ -161,6 +161,159 @@ const Index = () => {
         ]}
         tools={chatbotsTools}
       />
+      <CategorySection
+        title="Office & Productivity"
+        categories={[
+          'All', 'AI Assistant', 'AI Productivity Tools', 'AI Agent',
+          'AI Copilot', 'AI Search Engine', 'AI Report Generator'
+        ]}
+        tools={officeProductivityTools}
+      />
+      <CategorySection
+        title="Research & Data Analysis"
+        categories={[
+          'All', 'AI For Data Analytics', 'AI Research Tool', 'AI Predictions',
+          'AI Data Mining', 'AI Research Papers', 'AI Sports Betting'
+        ]}
+        tools={researchDataTools}
+      />
+      <CategorySection
+        title="Interior & Architectural Design"
+        categories={[
+          'All', 'AI Interior Design', 'AI Room Planner', 'AI Landscape Generator',
+          'AI Kitchen Design', 'AI Floor Plan Generator', 'AI Backyard Design'
+        ]}
+        tools={interiorDesignTools}
+      />
+      
+      {/* Resources Section */}
+      <div className="py-10 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-[#22223b]">Top AI Tools</h3>
+              <ul className="space-y-2 text-sm text-[#5f5f7a]">
+                <li>13 Reasons to Switch from Snapchat to Text Messaging</li>
+                <li>7 Powerful Speech to Text Apps to Boost Productivity</li>
+                <li>10 Best Speech to Text Tools for Effortless Transcription</li>
+                <li>13 Free Tools to Easily Transcribe Audio to Text</li>
+                <li>15 Surprising Ways Google's Speech-to-Text Boosts Productivity</li>
+                <li>7 Best Free Online Audio to Text Transcription Tools</li>
+                <li>9 Tips to Transcribe Speech to Text Faster and Better</li>
+                <li>13 Best Speech to Text Software for Windows 10 in 2023</li>
+                <li>7 Tips for Choosing the Best Transcriber for Audio to Text</li>
+                <li>11 Reasons Why Dragon Speech-to-Text Apps are Game-Changers</li>
+                <li>6 Secrets to Enhance Your Speech to Text Transcription</li>
+                <li>6 Brilliant Ways to Boost Productivity with Talk-to-Text on Your MacBook</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-[#22223b]">More Tools</h3>
+              <ul className="space-y-2 text-sm text-[#5f5f7a]">
+                <li>transcription audio en texte</li>
+                <li>online audio transcription</li>
+                <li>free audio file transcription</li>
+                <li>free ai audio transcription</li>
+                <li>audio transcription service</li>
+                <li>audio transcription online free</li>
+                <li>audio transcription free online</li>
+                <li>audio to transcription software</li>
+                <li>audio and transcript</li>
+                <li>ai audio transcription free</li>
+                <li>voice recording to text converter</li>
+                <li>translate voice recording to text</li>
+                <li>record voice to text</li>
+                <li>audio recording to text converter</li>
+                <li>voice recording and transcription</li>
+                <li>chatgpt voice to text</li>
+                <li>gmail voice to text</li>
+                <li>speech to text reader</li>
+                <li>speech to text ai free</li>
+                <li>speech to talk</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-[#22223b]">Recommend</h3>
+              <ul className="space-y-2 text-sm text-[#5f5f7a]">
+                <li>Shrink and speed up: How to make your AI models smaller and faster</li>
+                <li>Real-Time Price Intelligence: AI Strategies for Dynamic E-Commerce</li>
+                <li>Cutting-Edge Image Tools for Business Growth</li>
+                <li>7 Best AI Video Generators to Try in 2025</li>
+                <li>Why Your Home Improvement Business Needs a Modern Website and a Digital Strategy</li>
+                <li>How to launch a startup in 1 day using AI tools: step-by-step instructions</li>
+                <li>AI vs Human Touch: How Modern Astrology Tools Are Evolving in the Digital Age</li>
+                <li>How AI Agents Are Silently Redefining Marketing Success [Secret Revealed: Best AI SEO Agents]</li>
+                <li>AI and Coding: Navigating the Future of Software Development</li>
+                <li>Master the Art of SEO and Drive Organic Traffic to Your Website</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-[#22223b]">Read more</h3>
+              <ul className="space-y-2 text-sm text-[#5f5f7a] mb-6">
+                <li>Navigating Love and Connection: Exploring Themes of Belonging</li>
+                <li>Creating Professional AI Headshots: A Comprehensive Guide</li>
+                <li>Maximize Team Meetings: Unleashing Microsoft Teams Copilot</li>
+                <li>ISRO Free Courses: AI, Remote Sensing, and More in 2024</li>
+                <li>QuillBot AI: The Ultimate Writing Assistant for 2025</li>
+                <li>Romantic Getaway: Finding Love Under the Moonlight</li>
+                <li>AI and Legal Ethics: Navigating the Ethical Landscape</li>
+                <li>AI and Robotics: The Next Global Arms Race?</li>
+                <li>Pismo AI Review: Boost Your Writing Productivity in 2025</li>
+                <li>Maximizing Luck: 500 Exclusive Egg Hatching Strategy</li>
+              </ul>
+              
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-[#22223b]">About</h3>
+                  <ul className="space-y-1 text-sm text-[#5f5f7a]">
+                    <li>Fulfillment Policy</li>
+                    <li>Privacy Policy</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-[#22223b]">Contact Us</h3>
+                  <ul className="space-y-1 text-sm text-[#5f5f7a]">
+                    <li>business@toolify.ai</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-[#22223b]">Resource</h3>
+                  <ul className="space-y-1 text-sm text-[#5f5f7a]">
+                    <li>Blog</li>
+                    <li>AI News</li>
+                    <li>GPTS</li>
+                    <li>Stable Video Diffusion</li>
+                    <li>Gemini AI</li>
+                    <li>Hardware</li>
+                    <li>Top AI Tools</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-[#22223b]">Browse by Alphabet</h3>
+                  <div className="flex flex-wrap gap-2 text-sm text-[#5f5f7a]">
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Other'].map((letter) => (
+                      <span key={letter} className="cursor-pointer hover:text-[#7c5fff]">{letter}</span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-[#22223b]">Top 1000 AI Tools Directory</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['06/19', '06/18', '06/17', '06/16', '06/15', '06/14', '06/13', '06/12', '06/11'].map((date) => (
+                      <span key={date} className="bg-[#f3f1ff] px-3 py-1 rounded-lg text-sm text-[#22223b]">{date}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <Footer />
     </div>
   );
@@ -436,17 +589,62 @@ const educationTranslationTools = [
 
 const chatbotsTools = [
   { name: 'ChatGPT', description: 'A free-to-use AI system for conversations, insights, and tas…', icon: 'chatgpt' },
+  { name: 'OpenAI', description: 'AI research and deployment company focused on building s…', icon: 'openai' },
+  { name: 'Google Gemini', description: "Google's personal, proactive, and powerful AI assistant.", icon: 'gemini' },
+  { name: 'DeepSeek', description: 'DeepSeek is an AI company providing foundation models an…', icon: 'deepseek' },
+  { name: 'Grok', description: 'Grok is a free AI assistant by xAI for truth, objectivity, real-time…', icon: 'grok', isFree: true },
+  { name: 'Janitor AI', description: 'Janitor AI allows users to create NSFW fictional chatbot…', icon: 'janitorai' },
   { name: 'Claude', description: 'Claude is an AI assistant from Anthropic that helps with tasks …', icon: 'claude' },
-  { name: 'Character.AI', description: 'Chat with AI characters in interactive conversations.', icon: 'characterai' },
-  { name: 'Replika', description: 'An AI companion providing empathetic friendship and…', icon: 'replika' },
-  { name: 'Candy AI', description: 'AI companion platform for chat, video, voice, and character…', icon: 'candyai' },
-  { name: 'Pi', description: 'Pi is a personal AI designed to be a supportive and smart…', icon: 'pi', isFree: true },
-  { name: 'Poe', description: 'Poe is an AI chat platform powered by Quora, offering…', icon: 'poe' },
-  { name: 'MyShell', description: 'MyShell is a platform for creating and interacting with AI-powere…', icon: 'myshell' },
-  { name: 'Janitor AI', description: 'AI chatbot platform for character roleplay and conversations.', icon: 'janitorai' },
-  { name: 'Chai', description: 'Chat with AI characters and create your own AI companions.', icon: 'chai' },
-  { name: 'Crushon.AI', description: 'Unrestricted AI character chat platform for roleplay.', icon: 'crushon' },
-  { name: 'Spicy Chat AI', description: 'AI character chat platform with NSFW conversations.', icon: 'spicychat' }
+  { name: 'SPICYCHAT.AI', description: 'Chatbot platform with AI characters, allowing users to ch…', icon: 'spicychat' },
+  { name: 'Jotform AI Agents', description: 'Platform to create AI agents for customer service across multip…', icon: 'jotform', isFree: true },
+  { name: 'LOVESCAPE', description: 'Platform for creating and interacting with AI girlfriends…', icon: 'lovescape' },
+  { name: 'CrushOn.AI', description: 'Platform for unfiltered, unbounded emotional and NSFW AI charac…', icon: 'crushon' },
+  { name: 'ZeroGPT', description: 'ZeroGPT is an AI content detector and offers various writing tools.', icon: 'zerogpt' }
+];
+
+const officeProductivityTools = [
+  { name: 'ChatGPT', description: 'A free-to-use AI system for conversations, insights, and tas…', icon: 'chatgpt' },
+  { name: 'Google Gemini', description: "Google's personal, proactive, and powerful AI assistant.", icon: 'gemini' },
+  { name: 'DeepSeek', description: 'DeepSeek is an AI company providing foundation models an…', icon: 'deepseek' },
+  { name: 'Grok', description: 'Grok is a free AI assistant by xAI for truth, objectivity, real-time…', icon: 'grok', isFree: true },
+  { name: 'Notion', description: 'All-in-one workspace for notes, docs, projects, and AI-powered…', icon: 'notion' },
+  { name: 'Salesforce Platform', description: 'A unified platform for data, AI, CRM, development, and security.', icon: 'salesforce' },
+  { name: 'Perplexity AI', description: 'An AI search engine using large language models for informatio…', icon: 'perplexity' },
+  { name: 'Claude', description: 'Claude is an AI assistant from Anthropic that helps with tasks …', icon: 'claude' },
+  { name: 'Studocu', description: 'Studocu is a platform for students to share and access study…', icon: 'studocu' },
+  { name: 'Jotform AI Agents', description: 'Platform to create AI agents for customer service across multip…', icon: 'jotform', isFree: true },
+  { name: 'HubSpot', description: 'Customer platform with marketing, sales, service, and…', icon: 'hubspot' },
+  { name: 'Airtable', description: 'Airtable is a no-code app-building platform with AI for data…', icon: 'airtable' }
+];
+
+const researchDataTools = [
+  { name: 'Sora', description: 'Sora is an AI model by OpenAI that generates videos from text…', icon: 'sora', isFree: true },
+  { name: 'Salesforce Platform', description: 'A unified platform for data, AI, CRM, development, and security.', icon: 'salesforce' },
+  { name: 'Perplexity AI', description: 'An AI search engine using large language models for informatio…', icon: 'perplexity' },
+  { name: 'Airtable', description: 'Airtable is a no-code app-building platform with AI for data…', icon: 'airtable' },
+  { name: 'Beacons', description: 'All-in-one platform for content creators with link-in-bio, store,…', icon: 'beacons' },
+  { name: 'Thomson Reuters', description: 'Thomson Reuters: Technology solutions and expertise for…', icon: 'thomson' },
+  { name: 'Prolific', description: 'A platform connecting researchers with verified participants for hig…', icon: 'prolific' },
+  { name: 'LINER AI', description: 'AI-powered search assistant and digital highlighter for reliable…', icon: 'liner' },
+  { name: '文心一言', description: '文心一言 is an AI assistant for chatting, answering questions,…', icon: 'wenxin' },
+  { name: 'Runway', description: 'Runway is an AI research company providing tools for…', icon: 'runway' },
+  { name: 'Google AI for Dev…', description: 'Resources and tools for building with Google\'s AI models.', icon: 'googleai' },
+  { name: 'WolframAlpha', description: 'Computational knowledge engine for expert answers across vario…', icon: 'wolfram' }
+];
+
+const interiorDesignTools = [
+  { name: 'Planner 5D', description: 'A 3D home design tool using AI to convert 2D plans into 3D…', icon: 'planner5d', isFree: true },
+  { name: 'Coohom', description: 'All-in-one 3D design software for interior, furniture, and home…', icon: 'coohom' },
+  { name: 'Easy-Peasy.AI', description: 'All-in-one AI platform for content, images, audio, and transcription.', icon: 'easypeasy' },
+  { name: 'Artbreeder', description: 'AI-powered collaborative tool for creating and manipulating…', icon: 'artbreeder' },
+  { name: 'staryai', description: 'AI art generator app that transforms text prompts into…', icon: 'staryai' },
+  { name: 'Pincel', description: 'AI-powered online image editing app for simple and accessible…', icon: 'pincel' },
+  { name: 'mnml.ai', description: 'AI rendering platform for architects and interior designers…', icon: 'mnmlai' },
+  { name: 'RoomGPT', description: 'AI-powered tool to redesign rooms from a photo.', icon: 'roomgpt' },
+  { name: 'Photoleap', description: 'Creative photo editing app with AI tools for quick edits and pro…', icon: 'photoleap' },
+  { name: 'Collov Virtual Sta…', description: 'AI-powered virtual staging for real estate and home renova…', icon: 'collovvirtual', isFree: true },
+  { name: 'Collov AI', description: 'AI-powered virtual staging and design platform for real estate a…', icon: 'collovai' },
+  { name: 'Maket', description: 'Generative AI software for instant architectural plans and design…', icon: 'maket' }
 ];
 
 export default Index;
