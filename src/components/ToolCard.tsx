@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ToolCardProps {
   tool: {
@@ -11,6 +11,8 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+  const navigate = useNavigate();
+
   const getIconStyle = (iconName: string) => {
     const iconStyles: { [key: string]: string } = {
       seoing: 'bg-gradient-to-br from-[#7c5fff] to-[#b8b5ff]',
@@ -101,8 +103,17 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     return iconStyles[iconName] || 'bg-[#ede9fe] rounded-lg';
   };
 
+  const handleClick = () => {
+    // Convert tool name to URL-friendly ID
+    const toolId = tool.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+    navigate(`/tool/${toolId}`);
+  };
+
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-lg p-6 flex flex-col gap-3 min-h-[140px] relative transition-all duration-200 hover:-translate-y-1 hover:scale-105 cursor-pointer">
+    <div 
+      onClick={handleClick}
+      className="bg-white rounded-2xl shadow-md hover:shadow-lg p-6 flex flex-col gap-3 min-h-[140px] relative transition-all duration-200 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+    >
       <div className={`w-8 h-8 ${getIconStyle(tool.icon)} mb-1`}>
         {tool.icon === 'rf123' && <span>RF</span>}
       </div>
