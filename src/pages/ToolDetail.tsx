@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2, User } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check } from 'lucide-react';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button } from '../components/ui/button';
 import { Textarea } from '../components/ui/textarea';
 import { ScrollArea } from '../components/ui/scroll-area';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 
 // All tools data consolidated with complete tool list
 const allTools = [
@@ -141,6 +142,106 @@ const ToolDetail = () => {
       date: '2024-01-08'
     }
   ]);
+
+  const pricingPlans = [
+    {
+      name: 'Free',
+      price: '$0',
+      description: 'Explore your first AI Agent with limited usage (100 AI Credits/Month, 512MB Brain Storage, 1 Project/Workspace, Basic Meeting Agent, 1 Chat Agent). No Voice/Email/Application/Content Agents, no Advanced Brain Features, no APIs/Chrome Extension.',
+      features: [
+        '100 AI Credits/Month',
+        '512MB Brain Storage',
+        '1 Project/Workspace',
+        'Basic Meeting Agent',
+        '1 Chat Agent'
+      ],
+      limitations: [
+        'No Voice/Email/Application/Content Agents',
+        'No Advanced Brain Features',
+        'No APIs/Chrome Extension'
+      ],
+      isPopular: false
+    },
+    {
+      name: 'Starter',
+      price: '$9 per month',
+      description: 'Perfect to start automating key workflows (270 AI Credits/Month, 512MB Brain Storage, Multi-calendar Sync Meeting Agent, 1 Voice Agent, 1 Email Mailbox, Application Agent, Content Agent, APIs & Chrome Extension).',
+      features: [
+        '270 AI Credits/Month',
+        '512MB Brain Storage',
+        'Multi-calendar Sync Meeting Agent',
+        '1 Voice Agent',
+        '1 Email Mailbox',
+        'Application Agent',
+        'Content Agent',
+        'APIs & Chrome Extension'
+      ],
+      limitations: [],
+      isPopular: false
+    },
+    {
+      name: 'Basic',
+      price: '$99 per month',
+      description: 'Perfect to start automating key workflows (540 AI Credits/Month, 2GB Brain Storage, Unlimited Chat/Voice Agents, 3 Email Mailboxes, Advanced Brain Features, APIs).',
+      features: [
+        '540 AI Credits/Month',
+        '2GB Brain Storage',
+        'Unlimited Chat/Voice Agents',
+        '3 Email Mailboxes',
+        'Advanced Brain Features',
+        'APIs'
+      ],
+      limitations: [],
+      isPopular: false
+    },
+    {
+      name: 'Standard',
+      price: '$199 per month',
+      description: 'Scale automation across teams with multiple agents (1000 AI Credits/Month, 20GB Brain Storage, 3 Projects/Workspaces, Unlimited Chat/Voice/Email Agents, Advanced Brain Features, APIs).',
+      features: [
+        '1000 AI Credits/Month',
+        '20GB Brain Storage',
+        '3 Projects/Workspaces',
+        'Unlimited Chat/Voice/Email Agents',
+        'Advanced Brain Features',
+        'APIs'
+      ],
+      limitations: [],
+      isPopular: true
+    },
+    {
+      name: 'Premium',
+      price: '$499 per month',
+      description: 'Best for Full AI automation across all touchpoints (2000 AI Credits/Month, Unlimited Brain Storage, Unlimited Projects/Workspaces, Unlimited Agents, Advanced Brain Features, APIs).',
+      features: [
+        '2000 AI Credits/Month',
+        'Unlimited Brain Storage',
+        'Unlimited Projects/Workspaces',
+        'Unlimited Agents',
+        'Advanced Brain Features',
+        'APIs'
+      ],
+      limitations: [],
+      isPopular: false
+    },
+    {
+      name: 'Enterprise',
+      price: 'Contact for Pricing',
+      description: 'Custom plans with higher limits, dedicated support, advanced security, and custom integrations for unique workflows.',
+      features: [
+        'Custom AI Credits',
+        'Unlimited Brain Storage',
+        'Unlimited Projects/Workspaces',
+        'Unlimited Agents',
+        'Advanced Brain Features',
+        'Custom Integrations',
+        'Dedicated Support',
+        'Advanced Security'
+      ],
+      limitations: [],
+      isPopular: false
+    }
+  ];
 
   if (!tool) {
     return (
@@ -452,11 +553,89 @@ const ToolDetail = () => {
 
             {activeTab === 'Pricing' && (
               <div>
-                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Pricing</h2>
-                <div className="bg-[#f8f9fa] rounded-lg p-6">
-                  <p className="text-[#5f5f7a]">
-                    {tool.isFree ? 'This tool offers a free tier with premium features available.' : 'Contact the provider for detailed pricing information.'}
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl font-bold text-[#22223b] mb-4">{tool.name} Pricing</h2>
+                  <p className="text-[#5f5f7a] text-lg">Choose the perfect plan for your needs</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {pricingPlans.map((plan, index) => (
+                    <Card key={index} className={`relative border-2 transition-all duration-200 hover:shadow-lg ${
+                      plan.isPopular 
+                        ? 'border-[#7c5fff] shadow-lg' 
+                        : 'border-gray-200 hover:border-[#7c5fff]'
+                    }`}>
+                      {plan.isPopular && (
+                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                          <span className="bg-[#7c5fff] text-white px-4 py-1 rounded-full text-sm font-semibold">
+                            Most Popular
+                          </span>
+                        </div>
+                      )}
+                      
+                      <CardHeader className="text-center pb-4">
+                        <CardTitle className="text-2xl font-bold text-[#22223b] mb-2">
+                          {plan.name}
+                        </CardTitle>
+                        <div className="text-3xl font-bold text-[#22223b] mb-4">
+                          {plan.price}
+                        </div>
+                        <p className="text-[#5f5f7a] text-sm leading-relaxed">
+                          {plan.description}
+                        </p>
+                      </CardHeader>
+
+                      <CardContent className="pt-0">
+                        <div className="space-y-4 mb-6">
+                          <div>
+                            <h4 className="font-semibold text-[#22223b] mb-3">Features:</h4>
+                            <ul className="space-y-2">
+                              {plan.features.map((feature, featureIndex) => (
+                                <li key={featureIndex} className="flex items-start gap-2">
+                                  <Check size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
+                                  <span className="text-[#5f5f7a] text-sm">{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {plan.limitations.length > 0 && (
+                            <div>
+                              <h4 className="font-semibold text-[#22223b] mb-3">Limitations:</h4>
+                              <ul className="space-y-2">
+                                {plan.limitations.map((limitation, limitIndex) => (
+                                  <li key={limitIndex} className="flex items-start gap-2">
+                                    <span className="text-red-500 mt-0.5 flex-shrink-0">×</span>
+                                    <span className="text-[#5f5f7a] text-sm">{limitation}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+
+                        <Button 
+                          className={`w-full ${
+                            plan.isPopular 
+                              ? 'bg-[#7c5fff] hover:bg-[#5f4bb6] text-white' 
+                              : 'bg-white border-2 border-[#7c5fff] text-[#7c5fff] hover:bg-[#7c5fff] hover:text-white'
+                          }`}
+                        >
+                          {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className="bg-[#f8f9fa] rounded-xl p-6 text-center">
+                  <h3 className="text-xl font-bold text-[#22223b] mb-2">Need a Custom Plan?</h3>
+                  <p className="text-[#5f5f7a] mb-4">
+                    Contact our sales team for custom pricing and enterprise solutions tailored to your specific needs.
                   </p>
+                  <Button className="bg-[#7c5fff] hover:bg-[#5f4bb6] text-white">
+                    Contact Sales Team
+                  </Button>
                 </div>
               </div>
             )}
