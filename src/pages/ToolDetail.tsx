@@ -1,6 +1,7 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2 } from 'lucide-react';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -112,6 +113,7 @@ const getIconStyle = (iconName: string) => {
 const ToolDetail = () => {
   const { toolId } = useParams<{ toolId: string }>();
   const tool = allTools.find(t => t.id === toolId);
+  const [activeTab, setActiveTab] = useState('Product Information');
 
   if (!tool) {
     return (
@@ -136,12 +138,24 @@ const ToolDetail = () => {
     );
   }
 
+  const tabs = [
+    'Product Information',
+    'Reviews', 
+    'Pricing',
+    'Analytics',
+    'Social Listening',
+    'Embed',
+    'Alternatives'
+  ];
+
+  const relatedTools = allTools.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 4);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f3f1ff]">
       <Header />
       <Navbar />
       
-      <div className="flex-1 max-w-4xl mx-auto px-4 py-8">
+      <div className="flex-1 max-w-6xl mx-auto px-4 py-8">
         <Link 
           to="/" 
           className="inline-flex items-center gap-2 text-[#7c5fff] hover:text-[#5f4bb6] mb-8 transition-colors"
@@ -150,46 +164,193 @@ const ToolDetail = () => {
           Back to Tools
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <div className="flex items-start gap-6 mb-8">
-            <div className={`w-16 h-16 ${getIconStyle(tool.icon)} flex items-center justify-center flex-shrink-0`}>
-              {tool.icon === 'rf123' && <span className="text-white font-bold text-xl">RF</span>}
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          {/* Header Section */}
+          <div className="p-8 border-b">
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-start gap-6">
+                <div className={`w-16 h-16 ${getIconStyle(tool.icon)} flex items-center justify-center flex-shrink-0`}>
+                  {tool.icon === 'rf123' && <span className="text-white font-bold text-xl">RF</span>}
+                </div>
+                
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-4">
+                    <h1 className="text-4xl font-bold text-[#22223b]">{tool.name}</h1>
+                    {tool.isFree && (
+                      <span className="bg-[#ede9fe] text-[#7c5fff] text-sm font-bold rounded-lg px-3 py-1">
+                        Free
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="flex items-center gap-1">
+                      {[1,2,3,4,5].map((star) => (
+                        <Star key={star} size={16} className="fill-yellow-400 text-yellow-400" />
+                      ))}
+                      <span className="text-sm font-semibold ml-1">5</span>
+                    </div>
+                    <span className="text-[#5f5f7a] text-sm">0 Reviews</span>
+                    <span className="text-[#5f5f7a] text-sm">0 Saved</span>
+                  </div>
+                  
+                  <p className="text-[#5f5f7a] text-lg leading-relaxed mb-4">
+                    {tool.description}
+                  </p>
+                  
+                  <div className="text-sm text-[#7c5fff] font-semibold mb-4">
+                    Category: {tool.category}
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button className="bg-[#7c5fff] text-white px-6 py-3 rounded-xl hover:bg-[#5f4bb6] transition-colors font-semibold flex items-center gap-2">
+                      <ExternalLink size={16} />
+                      Open site
+                    </button>
+                    <button className="border border-[#e5e5e5] text-[#5f5f7a] px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                      <Heart size={16} />
+                    </button>
+                    <button className="border border-[#e5e5e5] text-[#5f5f7a] px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                      <Share2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-4">
-                <h1 className="text-4xl font-bold text-[#22223b]">{tool.name}</h1>
-                {tool.isFree && (
-                  <span className="bg-[#ede9fe] text-[#7c5fff] text-sm font-bold rounded-lg px-3 py-1">
-                    Free
-                  </span>
-                )}
+
+            {/* Tool Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
+              <div>
+                <div className="font-semibold text-[#22223b] mb-1">Introduction:</div>
+                <div className="text-[#5f5f7a]">{tool.description}</div>
               </div>
-              
-              <p className="text-[#5f5f7a] text-lg leading-relaxed mb-4">
-                {tool.description}
-              </p>
-              
-              <div className="text-sm text-[#7c5fff] font-semibold">
-                Category: {tool.category}
+              <div>
+                <div className="font-semibold text-[#22223b] mb-1">Added on:</div>
+                <div className="text-[#5f5f7a]">Dec 15 2024</div>
               </div>
+              <div>
+                <div className="font-semibold text-[#22223b] mb-1">Monthly Visitors:</div>
+                <div className="text-[#5f5f7a]">--</div>
+              </div>
+              <div>
+                <div className="font-semibold text-[#22223b] mb-1">Pricing:</div>
+                <div className="text-[#5f5f7a]">{tool.isFree ? 'Freemium' : 'Contact for Pricing'}</div>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 mt-6">
+              <span className="bg-[#f0f8ff] text-[#7c5fff] text-sm px-3 py-1 rounded-full border border-[#7c5fff]">
+                AI Agent
+              </span>
+              <span className="bg-[#f0f8ff] text-[#7c5fff] text-sm px-3 py-1 rounded-full border border-[#7c5fff]">
+                AI Assistant
+              </span>
+              <span className="bg-[#f0f8ff] text-[#7c5fff] text-sm px-3 py-1 rounded-full border border-[#7c5fff]">
+                {tool.category}
+              </span>
             </div>
           </div>
 
-          <div className="border-t pt-8">
-            <h2 className="text-2xl font-bold text-[#22223b] mb-4">About {tool.name}</h2>
-            <p className="text-[#5f5f7a] leading-relaxed mb-6">
-              {tool.description} This AI tool provides comprehensive solutions for users looking to enhance their productivity and creativity through advanced artificial intelligence capabilities.
-            </p>
-            
-            <div className="flex gap-4">
-              <button className="bg-[#7c5fff] text-white px-8 py-3 rounded-xl hover:bg-[#5f4bb6] transition-colors font-semibold">
-                Visit Website
-              </button>
-              <button className="border-2 border-[#7c5fff] text-[#7c5fff] px-8 py-3 rounded-xl hover:bg-[#7c5fff] hover:text-white transition-colors font-semibold">
-                Save Tool
-              </button>
+          {/* Tabs Navigation */}
+          <div className="border-b">
+            <div className="flex overflow-x-auto px-8">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+                    activeTab === tab
+                      ? 'border-[#7c5fff] text-[#7c5fff]'
+                      : 'border-transparent text-[#5f5f7a] hover:text-[#22223b]'
+                  }`}
+                >
+                  {tab}
+                  {tab === 'Social Listening' && (
+                    <span className="ml-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded">New</span>
+                  )}
+                </button>
+              ))}
             </div>
+          </div>
+
+          {/* Tab Content */}
+          <div className="p-8">
+            {activeTab === 'Product Information' && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#22223b] mb-6">About {tool.name}</h2>
+                <p className="text-[#5f5f7a] leading-relaxed mb-6">
+                  {tool.description} This AI tool provides comprehensive solutions for users looking to enhance their productivity and creativity through advanced artificial intelligence capabilities.
+                </p>
+                <div className="bg-[#f8f9fa] rounded-lg p-6 mb-6">
+                  <h3 className="font-semibold text-[#22223b] mb-3">Key Features:</h3>
+                  <ul className="list-disc list-inside space-y-2 text-[#5f5f7a]">
+                    <li>Advanced AI-powered functionality</li>
+                    <li>User-friendly interface</li>
+                    <li>Comprehensive automation tools</li>
+                    <li>Professional-grade results</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'Reviews' && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Reviews</h2>
+                <div className="text-center py-12">
+                  <p className="text-[#5f5f7a]">No reviews yet. Be the first to share your experience!</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'Pricing' && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Pricing</h2>
+                <div className="bg-[#f8f9fa] rounded-lg p-6">
+                  <p className="text-[#5f5f7a]">
+                    {tool.isFree ? 'This tool offers a free tier with premium features available.' : 'Contact the provider for detailed pricing information.'}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'Analytics' && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Analytics</h2>
+                <div className="text-center py-12">
+                  <p className="text-[#5f5f7a]">Analytics data will be available soon.</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'Alternatives' && relatedTools.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Similar Tools</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {relatedTools.map((relatedTool) => (
+                    <div key={relatedTool.id} className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
+                      <div className={`w-12 h-12 ${getIconStyle(relatedTool.icon)} mb-3`}>
+                        {relatedTool.icon === 'rf123' && <span className="text-white font-bold">RF</span>}
+                      </div>
+                      <h3 className="font-semibold text-[#22223b] mb-2">{relatedTool.name}</h3>
+                      <p className="text-[#5f5f7a] text-sm mb-3">{relatedTool.description}</p>
+                      {relatedTool.isFree && (
+                        <span className="bg-[#ede9fe] text-[#7c5fff] text-xs font-bold rounded px-2 py-1">
+                          Free
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Default content for other tabs */}
+            {!['Product Information', 'Reviews', 'Pricing', 'Analytics', 'Alternatives'].includes(activeTab) && (
+              <div className="text-center py-12">
+                <p className="text-[#5f5f7a]">Content for {activeTab} coming soon.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
