@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar, Youtube, Download, Search, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
@@ -121,6 +121,8 @@ const ToolDetail = () => {
   const [activeTab, setActiveTab] = useState('Product Information');
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const [socialFilter, setSocialFilter] = useState('All');
+  const [socialSort, setSocialSort] = useState('Most Viewed');
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -271,6 +273,51 @@ const ToolDetail = () => {
   const geographyData = [
     { country: 'India', percentage: 97.77, flag: '🇮🇳' },
     { country: 'United States', percentage: 2.23, flag: '🇺🇸' }
+  ];
+
+  const socialMediaData = [
+    {
+      id: 1,
+      platform: 'YouTube',
+      title: 'How Thunai.AI Helps You Rep...',
+      description: 'Stop wasting hours on email! 💡 Discover the secret to replying 10X...',
+      author: 'ThunAI',
+      date: 'Mar 07 2025',
+      duration: '1:31',
+      views: 85,
+      comments: 0,
+      likes: 7,
+      thumbnail: '/lovable-uploads/placeholder-video.jpg',
+      url: 'https://www.youtube.com/watch?v=...'
+    },
+    {
+      id: 2,
+      platform: 'YouTube',
+      title: 'Mind-Blowing AI Voice Agent ...',
+      description: 'Get ready to experience the future of enterprise support with Thunai.AI\'s...',
+      author: 'ThunAI',
+      date: 'Mar 10 2025',
+      duration: '5:42',
+      views: 75,
+      comments: 0,
+      likes: 7,
+      thumbnail: '/lovable-uploads/placeholder-video.jpg',
+      url: 'https://www.youtube.com/watch?v=...'
+    },
+    {
+      id: 3,
+      platform: 'YouTube',
+      title: 'Transform Your Call Center wi...',
+      description: 'Struggling to keep up with call center performance? With Thunai AI, every...',
+      author: 'ThunAI',
+      date: 'Apr 10 2025',
+      duration: '2:23',
+      views: 38,
+      comments: 0,
+      likes: 0,
+      thumbnail: '/lovable-uploads/placeholder-video.jpg',
+      url: 'https://www.youtube.com/watch?v=...'
+    }
   ];
 
   if (!tool) {
@@ -891,6 +938,182 @@ const ToolDetail = () => {
               </ScrollArea>
             )}
 
+            {activeTab === 'Social Listening' && (
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-[#22223b] mb-6">Social Listening</h2>
+                  
+                  {/* Platform Filters */}
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <button 
+                      onClick={() => setSocialFilter('All')}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        socialFilter === 'All' 
+                          ? 'bg-[#7c5fff] text-white' 
+                          : 'bg-gray-100 text-[#5f5f7a] hover:bg-gray-200'
+                      }`}
+                    >
+                      All
+                    </button>
+                    <button 
+                      onClick={() => setSocialFilter('YouTube')}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        socialFilter === 'YouTube' 
+                          ? 'bg-red-500 text-white' 
+                          : 'bg-gray-100 text-[#5f5f7a] hover:bg-gray-200'
+                      }`}
+                    >
+                      <Youtube size={16} />
+                      YouTube
+                    </button>
+                    <button 
+                      onClick={() => setSocialFilter('TikTok')}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        socialFilter === 'TikTok' 
+                          ? 'bg-black text-white' 
+                          : 'bg-gray-100 text-[#5f5f7a] hover:bg-gray-200'
+                      }`}
+                    >
+                      <span className="text-sm">🎵</span>
+                      TikTok
+                    </button>
+                  </div>
+
+                  {/* Controls Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <div className="flex flex-wrap items-center gap-4">
+                      <select 
+                        value={socialSort}
+                        onChange={(e) => setSocialSort(e.target.value)}
+                        className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c5fff]"
+                      >
+                        <option>Sort: Most Viewed</option>
+                        <option>Sort: Most Recent</option>
+                        <option>Sort: Most Liked</option>
+                      </select>
+                      
+                      <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c5fff]">
+                        <option>Creation time</option>
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                      </select>
+                      
+                      <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c5fff]">
+                        <option>Video duration</option>
+                        <option>Under 1 minute</option>
+                        <option>1-5 minutes</option>
+                        <option>5+ minutes</option>
+                      </select>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Button variant="outline" size="sm" className="flex items-center gap-2">
+                        <Download size={16} />
+                        Download
+                      </Button>
+                      <Button variant="outline" size="sm" className="flex items-center gap-2 text-[#7c5fff] border-[#7c5fff]">
+                        <Search size={16} />
+                        Search History
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Area */}
+                <ScrollArea className="h-[600px] pr-4">
+                  <div className="space-y-4">
+                    {socialMediaData.map((item) => (
+                      <Card key={item.id} className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-6">
+                          <div className="flex gap-4">
+                            {/* Platform Icon & Thumbnail */}
+                            <div className="flex-shrink-0">
+                              <div className="relative">
+                                <div className="w-24 h-16 bg-gray-200 rounded-lg flex items-center justify-center mb-2">
+                                  <div className="absolute top-1 left-1 bg-red-500 rounded p-1">
+                                    <Youtube size={12} className="text-white" />
+                                  </div>
+                                  <span className="text-xs bg-black text-white px-1 rounded absolute bottom-1 right-1">
+                                    {item.duration}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between mb-2">
+                                <h3 className="font-semibold text-[#22223b] text-lg hover:text-[#7c5fff] cursor-pointer">
+                                  {item.title}
+                                </h3>
+                                <div className="flex items-center gap-4 text-sm text-[#5f5f7a] ml-4">
+                                  <div className="flex items-center gap-1">
+                                    <Eye size={14} />
+                                    {item.views}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <MessageCircle size={14} />
+                                    {item.comments}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <span>--</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <ThumbsUp size={14} />
+                                    {item.likes}
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <p className="text-[#5f5f7a] mb-3 leading-relaxed">
+                                {item.description}
+                              </p>
+                              
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4 text-sm text-[#5f5f7a]">
+                                  <span className="font-medium">{item.author}</span>
+                                  <span>{item.date}</span>
+                                </div>
+                                <a 
+                                  href={item.url}
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-[#7c5fff] hover:text-[#5f4bb6] text-sm font-medium"
+                                >
+                                  {item.url}
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </ScrollArea>
+
+                {/* Unlock Premium Content */}
+                <Card className="mt-8 bg-gradient-to-r from-[#f8f9ff] to-[#ede9fe] border-[#7c5fff]">
+                  <CardContent className="p-8 text-center">
+                    <div className="w-16 h-16 bg-[#7c5fff] rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="w-8 h-8 border-4 border-white border-dashed rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-[#22223b] mb-2">
+                      Unlock to view <span className="text-[#7c5fff]">7</span> social media results.
+                    </h3>
+                    <p className="text-[#5f5f7a] mb-6">
+                      Get access to comprehensive social media analytics and insights
+                    </p>
+                    <Button className="bg-[#7c5fff] hover:bg-[#5f4bb6] text-white px-8 py-3 text-lg">
+                      View Now →
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
             {activeTab === 'Alternatives' && relatedTools.length > 0 && (
               <div>
                 <h2 className="text-2xl font-bold text-[#22223b] mb-6">Similar Tools</h2>
@@ -914,7 +1137,7 @@ const ToolDetail = () => {
             )}
 
             {/* Default content for other tabs */}
-            {!['Product Information', 'Reviews', 'Pricing', 'Analytics', 'Alternatives'].includes(activeTab) && (
+            {!['Product Information', 'Reviews', 'Pricing', 'Analytics', 'Social Listening', 'Alternatives'].includes(activeTab) && (
               <div className="text-center py-12">
                 <p className="text-[#5f5f7a]">Content for {activeTab} coming soon.</p>
               </div>
