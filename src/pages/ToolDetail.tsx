@@ -1,10 +1,12 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User } from 'lucide-react';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Button } from '../components/ui/button';
+import { Textarea } from '../components/ui/textarea';
+import { ScrollArea } from '../components/ui/scroll-area';
 
 // All tools data consolidated with complete tool list
 const allTools = [
@@ -114,6 +116,31 @@ const ToolDetail = () => {
   const { toolId } = useParams<{ toolId: string }>();
   const tool = allTools.find(t => t.id === toolId);
   const [activeTab, setActiveTab] = useState('Product Information');
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewText, setReviewText] = useState('');
+  const [reviews, setReviews] = useState([
+    {
+      id: 1,
+      name: 'Sarah Johnson',
+      rating: 5,
+      comment: 'Excellent tool! Really helped improve my SEO rankings. The interface is intuitive and the results are impressive.',
+      date: '2024-01-15'
+    },
+    {
+      id: 2,
+      name: 'Mike Chen',
+      rating: 4,
+      comment: 'Great features and easy to use. Could use more advanced analytics but overall very satisfied.',
+      date: '2024-01-10'
+    },
+    {
+      id: 3,
+      name: 'Emily Davis',
+      rating: 5,
+      comment: 'This tool has transformed how I approach SEO. The AI-powered suggestions are spot on.',
+      date: '2024-01-08'
+    }
+  ]);
 
   if (!tool) {
     return (
@@ -150,6 +177,43 @@ const ToolDetail = () => {
 
   const relatedTools = allTools.filter(t => t.category === tool.category && t.id !== tool.id).slice(0, 4);
 
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (reviewRating > 0 && reviewText.trim()) {
+      const newReview = {
+        id: reviews.length + 1,
+        name: 'Anonymous User',
+        rating: reviewRating,
+        comment: reviewText.trim(),
+        date: new Date().toISOString().split('T')[0]
+      };
+      setReviews([newReview, ...reviews]);
+      setReviewRating(0);
+      setReviewText('');
+    }
+  };
+
+  const averageRating = reviews.length > 0 
+    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length 
+    : 5;
+
+  const renderStars = (rating: number, interactive: boolean = false, onStarClick?: (rating: number) => void) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            size={16}
+            className={`${
+              star <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'
+            } ${interactive ? 'cursor-pointer hover:text-yellow-400' : ''}`}
+            onClick={() => interactive && onStarClick && onStarClick(star)}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f3f1ff]">
       <Header />
@@ -185,12 +249,10 @@ const ToolDetail = () => {
                   
                   <div className="flex items-center gap-4 mb-4">
                     <div className="flex items-center gap-1">
-                      {[1,2,3,4,5].map((star) => (
-                        <Star key={star} size={16} className="fill-yellow-400 text-yellow-400" />
-                      ))}
-                      <span className="text-sm font-semibold ml-1">5</span>
+                      {renderStars(Math.round(averageRating))}
+                      <span className="text-sm font-semibold ml-1">{averageRating.toFixed(1)}</span>
                     </div>
-                    <span className="text-[#5f5f7a] text-sm">0 Reviews</span>
+                    <span className="text-[#5f5f7a] text-sm">{reviews.length} Reviews</span>
                     <span className="text-[#5f5f7a] text-sm">0 Saved</span>
                   </div>
                   
@@ -266,6 +328,11 @@ const ToolDetail = () => {
                   }`}
                 >
                   {tab}
+                  {tab === 'Reviews' && (
+                    <span className="ml-1 bg-[#7c5fff] text-white text-xs px-1.5 py-0.5 rounded">
+                      {reviews.length}
+                    </span>
+                  )}
                   {tab === 'Social Listening' && (
                     <span className="ml-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded">New</span>
                   )}
@@ -296,9 +363,89 @@ const ToolDetail = () => {
 
             {activeTab === 'Reviews' && (
               <div>
-                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Reviews</h2>
-                <div className="text-center py-12">
-                  <p className="text-[#5f5f7a]">No reviews yet. Be the first to share your experience!</p>
+                <div className="flex flex-col lg:flex-row gap-8">
+                  {/* Review Form */}
+                  <div className="lg:w-1/3">
+                    <div className="bg-[#f8f9fa] rounded-xl p-6 sticky top-0">
+                      <h3 className="text-xl font-bold text-[#22223b] mb-4">
+                        Would you recommend {tool.name}? Leave a comment
+                      </h3>
+                      
+                      <form onSubmit={handleReviewSubmit} className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-[#22223b] mb-2">
+                            Your Rating
+                          </label>
+                          {renderStars(reviewRating, true, setReviewRating)}
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-[#22223b] mb-2">
+                            Your Review
+                          </label>
+                          <Textarea
+                            placeholder="What do you think?"
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                            className="min-h-[120px] resize-none"
+                            maxLength={10000}
+                          />
+                          <div className="text-xs text-[#5f5f7a] mt-1 text-right">
+                            {reviewText.length}/10000
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          type="submit" 
+                          className="w-full bg-[#7c5fff] hover:bg-[#5f4bb6]"
+                          disabled={reviewRating === 0 || !reviewText.trim()}
+                        >
+                          Submit Review
+                        </Button>
+                      </form>
+                    </div>
+                  </div>
+
+                  {/* Reviews List */}
+                  <div className="lg:w-2/3">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-bold text-[#22223b]">
+                        {tool.name} Reviews ({reviews.length})
+                      </h2>
+                      <div className="flex items-center gap-2">
+                        {renderStars(Math.round(averageRating))}
+                        <span className="font-semibold">{averageRating.toFixed(1)} out of 5</span>
+                      </div>
+                    </div>
+
+                    <ScrollArea className="h-[600px] pr-4">
+                      <div className="space-y-6">
+                        {reviews.map((review) => (
+                          <div key={review.id} className="bg-white border rounded-xl p-6 shadow-sm">
+                            <div className="flex items-start gap-4">
+                              <div className="w-10 h-10 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0">
+                                <User size={20} className="text-white" />
+                              </div>
+                              
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between mb-2">
+                                  <h4 className="font-semibold text-[#22223b]">{review.name}</h4>
+                                  <span className="text-sm text-[#5f5f7a]">{review.date}</span>
+                                </div>
+                                
+                                <div className="flex items-center gap-2 mb-3">
+                                  {renderStars(review.rating)}
+                                  <span className="text-sm font-medium">{review.rating} point out of 5 point</span>
+                                </div>
+                                
+                                <p className="text-[#5f5f7a] leading-relaxed">{review.comment}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </div>
                 </div>
               </div>
             )}
