@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -8,6 +9,7 @@ import { Button } from '../components/ui/button';
 import { Textarea } from '../components/ui/textarea';
 import { ScrollArea } from '../components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 
 // All tools data consolidated with complete tool list
 const allTools = [
@@ -241,6 +243,34 @@ const ToolDetail = () => {
       limitations: [],
       isPopular: false
     }
+  ];
+
+  const trafficData = [
+    { month: '2025-03-01', visits: 9500 },
+    { month: '2025-04-01', visits: 6000 },
+    { month: '2025-05-01', visits: 1200 }
+  ];
+
+  const trafficSources = [
+    { name: 'Direct', value: 47.85, color: '#ff6b9d' },
+    { name: 'Search', value: 40.06, color: '#4285f4' },
+    { name: 'Referrals', value: 6.89, color: '#ffc107' },
+    { name: 'Social', value: 3.25, color: '#10b981' },
+    { name: 'Display Ads', value: 1.89, color: '#00bcd4' },
+    { name: 'Mail', value: 0.06, color: '#6366f1' }
+  ];
+
+  const keywordData = [
+    { keyword: 'thunai', traffic: '--', cpc: '--' },
+    { keyword: 'thunai ai', traffic: '--', cpc: '--' },
+    { keyword: 'jegan thun', traffic: '--', cpc: '--' },
+    { keyword: 'ai calling agent', traffic: '--', cpc: '$25.61' },
+    { keyword: 'ai call agent', traffic: '--', cpc: '$1.68' }
+  ];
+
+  const geographyData = [
+    { country: 'India', percentage: 97.77, flag: '🇮🇳' },
+    { country: 'United States', percentage: 2.23, flag: '🇺🇸' }
   ];
 
   if (!tool) {
@@ -641,12 +671,224 @@ const ToolDetail = () => {
             )}
 
             {activeTab === 'Analytics' && (
-              <div>
-                <h2 className="text-2xl font-bold text-[#22223b] mb-6">Analytics</h2>
-                <div className="text-center py-12">
-                  <p className="text-[#5f5f7a]">Analytics data will be available soon.</p>
+              <ScrollArea className="h-[800px] pr-4">
+                <div>
+                  <div className="mb-8">
+                    <h2 className="text-3xl font-bold text-[#22223b] mb-2">Analytics of {tool.name}</h2>
+                    <div className="flex items-center gap-2 text-[#7c5fff] mb-6">
+                      <div className="w-2 h-2 bg-[#7c5fff] rounded"></div>
+                      <span className="font-semibold">{tool.name} Website Traffic Analysis</span>
+                    </div>
+                  </div>
+
+                  {/* Visit Over Time Section */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1 h-6 bg-[#7c5fff] rounded"></div>
+                          <CardTitle className="text-xl font-bold text-[#22223b]">Visit Over Time</CardTitle>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#5f5f7a]">
+                          <Calendar size={16} />
+                          <span className="text-sm">Mar 2025 - May 2025 All Traffic</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Stats */}
+                        <div className="space-y-6">
+                          <div>
+                            <div className="text-[#5f5f7a] text-sm mb-1">Monthly Visits</div>
+                            <div className="text-2xl font-bold text-[#22223b]">--</div>
+                          </div>
+                          <div>
+                            <div className="text-[#5f5f7a] text-sm mb-1">Avg. Visit Duration</div>
+                            <div className="text-2xl font-bold text-[#22223b]">00:01:35</div>
+                          </div>
+                          <div>
+                            <div className="text-[#5f5f7a] text-sm mb-1">Page per Visit</div>
+                            <div className="text-2xl font-bold text-[#22223b]">3.06</div>
+                          </div>
+                          <div>
+                            <div className="text-[#5f5f7a] text-sm mb-1">Bounce Rate</div>
+                            <div className="text-2xl font-bold text-[#22223b]">54.97%</div>
+                          </div>
+                        </div>
+
+                        {/* Chart */}
+                        <div className="lg:col-span-2">
+                          <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={trafficData}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                              <XAxis 
+                                dataKey="month" 
+                                tickFormatter={(value) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                stroke="#5f5f7a"
+                                fontSize={12}
+                              />
+                              <YAxis 
+                                tickFormatter={(value) => `${value/1000}K`}
+                                stroke="#5f5f7a"
+                                fontSize={12}
+                              />
+                              <Tooltip 
+                                labelFormatter={(value) => new Date(value).toLocaleDateString()}
+                                formatter={(value) => [`${value.toLocaleString()} visits`, 'Traffic']}
+                                contentStyle={{
+                                  backgroundColor: 'white',
+                                  border: '1px solid #e5e5e5',
+                                  borderRadius: '8px',
+                                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                }}
+                              />
+                              <Line 
+                                type="monotone" 
+                                dataKey="visits" 
+                                stroke="#7c5fff" 
+                                strokeWidth={3}
+                                dot={{ fill: '#7c5fff', strokeWidth: 2, r: 6 }}
+                                activeDot={{ r: 8, fill: '#7c5fff' }}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Geography Section */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1 h-6 bg-[#7c5fff] rounded"></div>
+                          <CardTitle className="text-xl font-bold text-[#22223b]">Geography</CardTitle>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#5f5f7a]">
+                          <Calendar size={16} />
+                          <span className="text-sm">Mar 2025 - May 2025 Desktop Only</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div>
+                        <h4 className="font-semibold text-[#22223b] mb-4">Top 2 Regions</h4>
+                        <div className="space-y-4">
+                          {geographyData.map((region, index) => (
+                            <div key={index} className="flex items-center justify-between p-4 bg-[#f8f9fa] rounded-lg">
+                              <div className="flex items-center gap-3">
+                                <span className="text-2xl">{region.flag}</span>
+                                <span className="font-medium text-[#22223b]">{region.country}</span>
+                              </div>
+                              <span className="font-bold text-[#22223b]">{region.percentage}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Traffic Sources Section */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-1 h-6 bg-[#7c5fff] rounded"></div>
+                          <CardTitle className="text-xl font-bold text-[#22223b]">Traffic Sources</CardTitle>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#5f5f7a]">
+                          <Calendar size={16} />
+                          <span className="text-sm">Mar 2025 - May 2025 Worldwide Desktop Only</span>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Sources List */}
+                        <div className="space-y-4">
+                          {trafficSources.map((source, index) => (
+                            <div key={index} className="flex items-center justify-between p-3 bg-[#f8f9fa] rounded-lg">
+                              <div className="flex items-center gap-3">
+                                <div 
+                                  className="w-4 h-4 rounded-full" 
+                                  style={{ backgroundColor: source.color }}
+                                ></div>
+                                <span className="font-medium text-[#22223b]">{source.name}</span>
+                              </div>
+                              <span className="font-bold text-[#22223b]">{source.value}%</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Pie Chart */}
+                        <div className="flex justify-center">
+                          <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                              <Pie
+                                data={trafficSources}
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={100}
+                                innerRadius={60}
+                                dataKey="value"
+                                startAngle={90}
+                                endAngle={450}
+                              >
+                                {trafficSources.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                              </Pie>
+                              <Tooltip 
+                                formatter={(value) => [`${value}%`, 'Traffic Share']}
+                                contentStyle={{
+                                  backgroundColor: 'white',
+                                  border: '1px solid #e5e5e5',
+                                  borderRadius: '8px',
+                                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                }}
+                              />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Top Keywords Section */}
+                  <Card>
+                    <CardHeader>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1 h-6 bg-[#7c5fff] rounded"></div>
+                        <CardTitle className="text-xl font-bold text-[#22223b]">Top Keywords</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-[#f8f9fa]">
+                              <TableHead className="font-semibold text-[#22223b]">Keyword</TableHead>
+                              <TableHead className="font-semibold text-[#22223b]">Traffic</TableHead>
+                              <TableHead className="font-semibold text-[#22223b]">Cost Per Click</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {keywordData.map((keyword, index) => (
+                              <TableRow key={index} className="hover:bg-[#f8f9fa] transition-colors">
+                                <TableCell className="font-medium text-[#22223b]">{keyword.keyword}</TableCell>
+                                <TableCell className="text-[#5f5f7a]">{keyword.traffic}</TableCell>
+                                <TableCell className="text-[#5f5f7a]">{keyword.cpc}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-              </div>
+              </ScrollArea>
             )}
 
             {activeTab === 'Alternatives' && relatedTools.length > 0 && (
