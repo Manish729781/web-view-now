@@ -553,9 +553,9 @@ const ToolDetail = () => {
 
                   {/* Core Features section */}
                   <section>
-                    <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}'s Core Features</h2>
+                    <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}&apos;s Core Features</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                      {tool.id === 'thunai' ? [
+                      {(tool.id === 'thunai' ? [
                         'Agentic AI Platform with self-learning brain',
                         'Smart Knowledge Management',
                         'AI-Powered Insights & Reports',
@@ -577,7 +577,7 @@ const ToolDetail = () => {
                         'Analytics and reporting',
                         'Secure data handling',
                         'Scalable solutions'
-                      ]}.map((feature, index) => (
+                      ]).map((feature, index) => (
                         <div key={index} className="flex items-start gap-3 p-3 bg-[#f8f9fa] rounded-lg">
                           <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <Check size={14} className="text-white" />
@@ -591,7 +591,7 @@ const ToolDetail = () => {
                   {/* Use Cases section */}
                   {tool.id === 'thunai' && (
                     <section>
-                      <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}'s Use Cases</h2>
+                      <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}&apos;s Use Cases</h2>
                       <div className="space-y-4 mb-6">
                         {[
                           'Automating customer support by resolving L1 tickets and escalating urgent issues.',
@@ -616,7 +616,7 @@ const ToolDetail = () => {
                   <section>
                     <h2 className="text-2xl font-bold text-[#22223b] mb-6">FAQ from {tool.name}</h2>
                     <Accordion type="single" collapsible className="w-full space-y-2">
-                      {tool.id === 'thunai' ? [
+                      {(tool.id === 'thunai' ? [
                         {
                           question: "What exactly does Thunai do?",
                           answer: "Thunai transforms your organization's scattered knowledge into intelligent AI agents that can handle calls, chats, emails, and tasks automatically. It centralizes information and creates smart agents for support, sales, and marketing automation."
@@ -654,7 +654,7 @@ const ToolDetail = () => {
                           question: `What kind of support do you offer?`,
                           answer: `We provide comprehensive support including documentation, tutorials, email support, and dedicated customer success teams for enterprise clients.`
                         }
-                      ]}.map((faq, index) => (
+                      ]).map((faq, index) => (
                         <AccordionItem key={index} value={`item-${index}`} className="border border-gray-200 rounded-lg px-4">
                           <AccordionTrigger className="text-left font-semibold text-[#22223b] hover:text-[#7c5fff] py-4">
                             {faq.question}
@@ -671,7 +671,7 @@ const ToolDetail = () => {
                   <section>
                     <h2 className="text-2xl font-bold text-[#22223b] mb-6">Contact & Support Information</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {tool.id === 'thunai' ? [
+                      {(tool.id === 'thunai' ? [
                         {
                           title: "Support Email & Customer Service",
                           content: "For customer service inquiries, contact us at sales@thunai.ai",
@@ -723,7 +723,7 @@ const ToolDetail = () => {
                           content: `Join our community for tips and discussions`,
                           link: "#"
                         }
-                      ]}.map((contact, index) => (
+                      ]).map((contact, index) => (
                         <div key={index} className="bg-white border rounded-xl p-6 hover:shadow-md transition-shadow">
                           <div className="flex items-start gap-3 mb-3">
                             <div className="w-3 h-3 bg-[#7c5fff] rounded-full mt-2 flex-shrink-0"></div>
