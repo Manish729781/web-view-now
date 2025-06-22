@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar, Youtube, Download, Search, Eye, MessageCircle, ThumbsUp } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar, Youtube, Download, Search, Eye, MessageCircle, ThumbsUp, Plus, Minus } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
@@ -10,6 +10,7 @@ import { Textarea } from '../components/ui/textarea';
 import { ScrollArea } from '../components/ui/scroll-area';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
 
 // All tools data consolidated with complete tool list
 const allTools = [
@@ -522,21 +523,227 @@ const ToolDetail = () => {
           {/* Tab Content */}
           <div className="p-8">
             {activeTab === 'Product Information' && (
-              <div>
-                <h2 className="text-2xl font-bold text-[#22223b] mb-6">About {tool.name}</h2>
-                <p className="text-[#5f5f7a] leading-relaxed mb-6">
-                  {tool.description} This AI tool provides comprehensive solutions for users looking to enhance their productivity and creativity through advanced artificial intelligence capabilities.
-                </p>
-                <div className="bg-[#f8f9fa] rounded-lg p-6 mb-6">
-                  <h3 className="font-semibold text-[#22223b] mb-3">Key Features:</h3>
-                  <ul className="list-disc list-inside space-y-2 text-[#5f5f7a]">
-                    <li>Advanced AI-powered functionality</li>
-                    <li>User-friendly interface</li>
-                    <li>Comprehensive automation tools</li>
-                    <li>Professional-grade results</li>
-                  </ul>
+              <ScrollArea className="h-[800px] pr-4">
+                <div className="space-y-8">
+                  {/* What is the tool section */}
+                  <section>
+                    <h2 className="text-3xl font-bold text-[#22223b] mb-6">What is {tool.name}?</h2>
+                    <div className="bg-[#f8f9fa] rounded-xl p-6 mb-6">
+                      <p className="text-[#5f5f7a] leading-relaxed text-lg">
+                        {tool.id === 'thunai' 
+                          ? "Thunai is an Agentic AI Platform with a self-learning brain that transforms an organization's scattered knowledge (including documents, videos, slides, transcripts, audio, links, and chats) into smart AI agents. These agents are designed to handle calls, chats, emails, and tasks automatically. It centralizes information and creates smart agents for support, sales, and marketing automation."
+                          : `${tool.name} is a comprehensive AI-powered platform designed to enhance productivity and streamline workflows. This advanced tool provides intelligent solutions for businesses and individuals looking to leverage artificial intelligence for improved efficiency and results. With cutting-edge features and user-friendly interface, ${tool.name} transforms how users approach their daily tasks and long-term objectives.`
+                        }
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* How to use section */}
+                  <section>
+                    <h2 className="text-2xl font-bold text-[#22223b] mb-4">How to use {tool.name}?</h2>
+                    <div className="bg-white border rounded-xl p-6 mb-6">
+                      <p className="text-[#5f5f7a] leading-relaxed">
+                        {tool.id === 'thunai' 
+                          ? "To use Thunai, users upload their organizational knowledge, including documents, videos, slides, transcripts, audio, links, and chats. Thunai's AI brain processes this information to create and deploy AI agents. These agents then act, respond, and automate tasks instantly across sales, support, and marketing, requiring no scripts or extensive training for immediate results."
+                          : `Getting started with ${tool.name} is straightforward. Simply sign up for an account, upload your content or data, and let the AI-powered features guide you through the process. The platform offers intuitive tools and automated workflows that adapt to your specific needs and requirements.`
+                        }
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* Core Features section */}
+                  <section>
+                    <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}'s Core Features</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                      {tool.id === 'thunai' ? [
+                        'Agentic AI Platform with self-learning brain',
+                        'Smart Knowledge Management',
+                        'AI-Powered Insights & Reports',
+                        'Enterprise-Wide Search',
+                        'Real-Time Chat Assistance',
+                        'Voice, Chat, Email, Meeting, and Application AI Agents',
+                        'Workflow Automation',
+                        'Multilanguage Support',
+                        'Integrations via APIs and Chrome Extension',
+                        'AI-Powered Note-Taking and Content Creation Tools'
+                      ] : [
+                        'Advanced AI-powered functionality',
+                        'User-friendly interface',
+                        'Comprehensive automation tools',
+                        'Real-time processing',
+                        'Professional-grade results',
+                        'Multi-platform integration',
+                        'Customizable workflows',
+                        'Analytics and reporting',
+                        'Secure data handling',
+                        'Scalable solutions'
+                      ]}.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-3 p-3 bg-[#f8f9fa] rounded-lg">
+                          <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Check size={14} className="text-white" />
+                          </div>
+                          <span className="text-[#5f5f7a] font-medium">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Use Cases section */}
+                  {tool.id === 'thunai' && (
+                    <section>
+                      <h2 className="text-2xl font-bold text-[#22223b] mb-6">{tool.name}'s Use Cases</h2>
+                      <div className="space-y-4 mb-6">
+                        {[
+                          'Automating customer support by resolving L1 tickets and escalating urgent issues.',
+                          'Accelerating sales processes through faster lead response, follow-ups, and lead qualification.',
+                          'Enhancing marketing efforts with instant content creation, targeted posts, and ad variant generation.',
+                          'Automating routine tasks and email drafting for sales and support teams.',
+                          'Centralizing scattered organizational knowledge for easy access and decision-making.',
+                          'Providing personal AI assistance for tasks like LinkedIn contact research and meeting management.'
+                        ].map((useCase, index) => (
+                          <div key={index} className="flex items-start gap-4 p-4 bg-white border rounded-lg">
+                            <div className="w-8 h-8 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0">
+                              <span className="text-white font-bold text-sm">#{index + 1}</span>
+                            </div>
+                            <p className="text-[#5f5f7a] leading-relaxed">{useCase}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+
+                  {/* FAQ Section */}
+                  <section>
+                    <h2 className="text-2xl font-bold text-[#22223b] mb-6">FAQ from {tool.name}</h2>
+                    <Accordion type="single" collapsible className="w-full space-y-2">
+                      {tool.id === 'thunai' ? [
+                        {
+                          question: "What exactly does Thunai do?",
+                          answer: "Thunai transforms your organization's scattered knowledge into intelligent AI agents that can handle calls, chats, emails, and tasks automatically. It centralizes information and creates smart agents for support, sales, and marketing automation."
+                        },
+                        {
+                          question: "What makes Thunai different from other enterprise search solutions?",
+                          answer: "Unlike traditional search solutions, Thunai doesn't just find information—it creates intelligent agents that can act on that information. Our self-learning brain processes your organizational knowledge to deploy proactive AI agents across multiple channels."
+                        },
+                        {
+                          question: "How does Thunai handle sensitive customer data?",
+                          answer: "Thunai employs enterprise-grade security measures including data encryption, secure APIs, and compliance with industry standards to ensure your sensitive customer data is protected at all times."
+                        },
+                        {
+                          question: "Do you offer on-premises deployment options?",
+                          answer: "Yes, Thunai offers flexible deployment options including cloud, hybrid, and on-premises solutions to meet your organization's specific security and infrastructure requirements."
+                        },
+                        {
+                          question: "How can Thunai help in customer support automation?",
+                          answer: "Thunai's AI agents can automatically resolve L1 support tickets, escalate urgent issues to human agents, and provide 24/7 customer assistance through multiple channels including chat, email, and voice."
+                        }
+                      ] : [
+                        {
+                          question: `What exactly does ${tool.name} do?`,
+                          answer: `${tool.name} provides comprehensive AI-powered solutions to enhance productivity and streamline workflows for businesses and individuals.`
+                        },
+                        {
+                          question: `How do I get started with ${tool.name}?`,
+                          answer: `Getting started is easy! Simply sign up for an account, follow our onboarding process, and begin exploring the features that best suit your needs.`
+                        },
+                        {
+                          question: `Is ${tool.name} suitable for my business size?`,
+                          answer: `${tool.name} is designed to scale with businesses of all sizes, from individual users to large enterprises, offering flexible plans and features.`
+                        },
+                        {
+                          question: `What kind of support do you offer?`,
+                          answer: `We provide comprehensive support including documentation, tutorials, email support, and dedicated customer success teams for enterprise clients.`
+                        }
+                      ]}.map((faq, index) => (
+                        <AccordionItem key={index} value={`item-${index}`} className="border border-gray-200 rounded-lg px-4">
+                          <AccordionTrigger className="text-left font-semibold text-[#22223b] hover:text-[#7c5fff] py-4">
+                            {faq.question}
+                          </AccordionTrigger>
+                          <AccordionContent className="text-[#5f5f7a] leading-relaxed pb-4">
+                            {faq.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </section>
+
+                  {/* Contact Information Section */}
+                  <section>
+                    <h2 className="text-2xl font-bold text-[#22223b] mb-6">Contact & Support Information</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {tool.id === 'thunai' ? [
+                        {
+                          title: "Support Email & Customer Service",
+                          content: "For customer service inquiries, contact us at sales@thunai.ai",
+                          link: "mailto:sales@thunai.ai"
+                        },
+                        {
+                          title: "Company Information",
+                          content: "Learn more about Thunai and our mission",
+                          link: "https://www.thunai.ai/"
+                        },
+                        {
+                          title: "Login Portal",
+                          content: "Access your Thunai account",
+                          link: "https://app.thunai.ai/accounts/login"
+                        },
+                        {
+                          title: "Sign Up",
+                          content: "Create a new Thunai account",
+                          link: "https://app.thunai.ai/accounts/sign-up"
+                        },
+                        {
+                          title: "LinkedIn",
+                          content: "Follow us on LinkedIn for updates",
+                          link: "https://www.linkedin.com/company/thunai-ai/"
+                        },
+                        {
+                          title: "Twitter",
+                          content: "Stay connected on Twitter",
+                          link: "https://x.com/ThunaiAI"
+                        }
+                      ] : [
+                        {
+                          title: "Customer Support",
+                          content: `Contact our support team for assistance with ${tool.name}`,
+                          link: "#"
+                        },
+                        {
+                          title: "Company Information",
+                          content: `Learn more about ${tool.name} and our services`,
+                          link: "#"
+                        },
+                        {
+                          title: "Getting Started",
+                          content: `Access tutorials and documentation for ${tool.name}`,
+                          link: "#"
+                        },
+                        {
+                          title: "Community",
+                          content: `Join our community for tips and discussions`,
+                          link: "#"
+                        }
+                      ]}.map((contact, index) => (
+                        <div key={index} className="bg-white border rounded-xl p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-start gap-3 mb-3">
+                            <div className="w-3 h-3 bg-[#7c5fff] rounded-full mt-2 flex-shrink-0"></div>
+                            <h3 className="font-semibold text-[#22223b] text-lg">{contact.title}</h3>
+                          </div>
+                          <p className="text-[#5f5f7a] mb-3">{contact.content}</p>
+                          <a 
+                            href={contact.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-[#7c5fff] hover:text-[#5f4bb6] font-medium inline-flex items-center gap-1 transition-colors"
+                          >
+                            Visit <ExternalLink size={14} />
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
                 </div>
-              </div>
+              </ScrollArea>
             )}
 
             {activeTab === 'Reviews' && (
