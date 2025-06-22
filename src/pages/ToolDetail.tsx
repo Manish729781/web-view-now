@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar, Youtube, Download, Search, Eye, MessageCircle, ThumbsUp, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Star, ExternalLink, Heart, Share2, User, Check, Calendar, Youtube, Download, Search, Eye, MessageCircle, ThumbsUp, Plus, Minus, Copy, Code } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
@@ -124,6 +124,8 @@ const ToolDetail = () => {
   const [reviewText, setReviewText] = useState('');
   const [socialFilter, setSocialFilter] = useState('All');
   const [socialSort, setSocialSort] = useState('Most Viewed');
+  const [embedTheme, setEmbedTheme] = useState('Light');
+  const [copiedCode, setCopiedCode] = useState('');
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -376,6 +378,12 @@ const ToolDetail = () => {
     ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length 
     : 5;
 
+  const copyToClipboard = (code: string, type: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(type);
+    setTimeout(() => setCopiedCode(''), 2000);
+  };
+
   const renderStars = (rating: number, interactive: boolean = false, onStarClick?: (rating: number) => void) => {
     return (
       <div className="flex items-center gap-1">
@@ -391,6 +399,25 @@ const ToolDetail = () => {
         ))}
       </div>
     );
+  };
+
+  const embedCodes = {
+    badge: `<a href="https://toolify.ai/tool/${toolId}" target="_blank" rel="noopener noreferrer">
+  <img src="https://toolify.ai/api/badge/${toolId}?theme=${embedTheme.toLowerCase()}" alt="Featured on Toolify.ai" width="200" height="50" />
+</a>`,
+    widget: `<iframe 
+  src="https://toolify.ai/embed/tool/${toolId}?theme=${embedTheme.toLowerCase()}" 
+  width="300" 
+  height="400" 
+  frameborder="0" 
+  scrolling="no">
+</iframe>`,
+    button: `<a href="https://toolify.ai/tool/${toolId}" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   style="display: inline-block; padding: 12px 24px; background: #7c5fff; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+  Featured on Toolify.ai
+</a>`
   };
 
   return (
@@ -1321,6 +1348,286 @@ const ToolDetail = () => {
               </div>
             )}
 
+            {activeTab === 'Embed' && (
+              <div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold text-[#22223b] mb-4">{tool.name} Launch embeds</h2>
+                  <p className="text-[#5f5f7a] text-lg leading-relaxed">
+                    Use website badges to drive support from your community for your Toolify Launch. They're easy to embed on your homepage or footer.
+                  </p>
+                </div>
+
+                {/* Theme Selection */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-bold text-[#22223b] mb-4">Choose Theme</h3>
+                  <div className="flex gap-3">
+                    {['Light', 'Neutral', 'Dark'].map((theme) => (
+                      <button
+                        key={theme}
+                        onClick={() => setEmbedTheme(theme)}
+                        className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                          embedTheme === theme
+                            ? theme === 'Light' 
+                              ? 'bg-[#7c5fff] text-white'
+                              : theme === 'Neutral'
+                              ? 'bg-gray-500 text-white'
+                              : 'bg-gray-900 text-white'
+                            : 'bg-gray-100 text-[#5f5f7a] hover:bg-gray-200'
+                        }`}
+                      >
+                        {theme}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <ScrollArea className="h-[600px] pr-4">
+                  <div className="space-y-8">
+                    {/* Badge Embed */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-[#7c5fff] rounded-lg flex items-center justify-center">
+                            <Star size={16} className="text-white fill-white" />
+                          </div>
+                          Website Badge
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="flex items-center justify-between p-4 bg-[#f8f9fa] rounded-lg border-2 border-dashed border-gray-300">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-[#7c5fff] rounded-full flex items-center justify-center">
+                              <Star size={16} className="text-white fill-white" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-semibold text-[#7c5fff]">FEATURED ON</div>
+                              <div className="text-lg font-bold text-[#22223b]">Toolify.ai</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-semibold text-[#22223b]">Embed Code</h4>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => copyToClipboard(embedCodes.badge, 'badge')}
+                              className="flex items-center gap-2"
+                            >
+                              {copiedCode === 'badge' ? <Check size={16} /> : <Copy size={16} />}
+                              {copiedCode === 'badge' ? 'Copied!' : 'Copy embed code'}
+                            </Button>
+                          </div>
+                          <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                            <code className="text-green-400 text-sm whitespace-pre">
+                              {embedCodes.badge}
+                            </code>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Widget Embed */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-[#7c5fff] rounded-lg flex items-center justify-center">
+                            <Code size={16} className="text-white" />
+                          </div>
+                          Tool Widget
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="p-4 bg-[#f8f9fa] rounded-lg border">
+                          <div className="w-full max-w-sm mx-auto">
+                            <div className="bg-white rounded-lg shadow-sm border p-4">
+                              <div className="flex items-center gap-3 mb-3">
+                                <div className={`w-10 h-10 ${getIconStyle(tool.icon)} flex-shrink-0`}></div>
+                                <div>
+                                  <h3 className="font-semibold text-[#22223b] text-sm">{tool.name}</h3>
+                                  <div className="flex items-center gap-1">
+                                    {renderStars(Math.round(averageRating))}
+                                  </div>
+                                </div>
+                              </div>
+                              <p className="text-xs text-[#5f5f7a] mb-3 line-clamp-2">
+                                {tool.description}
+                              </p>
+                              <Button size="sm" className="w-full bg-[#7c5fff] hover:bg-[#5f4bb6] text-xs">
+                                View on Toolify.ai
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-semibold text-[#22223b]">Embed Code</h4>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => copyToClipboard(embedCodes.widget, 'widget')}
+                              className="flex items-center gap-2"
+                            >
+                              {copiedCode === 'widget' ? <Check size={16} /> : <Copy size={16} />}
+                              {copiedCode === 'widget' ? 'Copied!' : 'Copy embed code'}
+                            </Button>
+                          </div>
+                          <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                            <code className="text-green-400 text-sm whitespace-pre">
+                              {embedCodes.widget}
+                            </code>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Button Embed */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-[#7c5fff] rounded-lg flex items-center justify-center">
+                            <ExternalLink size={16} className="text-white" />
+                          </div>
+                          Call-to-Action Button
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="flex justify-center p-6 bg-[#f8f9fa] rounded-lg">
+                          <a 
+                            href="#" 
+                            className="inline-block px-6 py-3 bg-[#7c5fff] text-white text-sm font-semibold rounded-lg hover:bg-[#5f4bb6] transition-colors"
+                          >
+                            Featured on Toolify.ai
+                          </a>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-semibold text-[#22223b]">Embed Code</h4>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => copyToClipboard(embedCodes.button, 'button')}
+                              className="flex items-center gap-2"
+                            >
+                              {copiedCode === 'button' ? <Check size={16} /> : <Copy size={16} />}
+                              {copiedCode === 'button' ? 'Copied!' : 'Copy embed code'}
+                            </Button>
+                          </div>
+                          <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                            <code className="text-green-400 text-sm whitespace-pre">
+                              {embedCodes.button}
+                            </code>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Installation Instructions */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                            <Check size={16} className="text-white" />
+                          </div>
+                          How to Install?
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-start gap-4">
+                            <div className="w-8 h-8 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-white font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b] mb-2">Copy the embed code</h4>
+                              <p className="text-[#5f5f7a] text-sm">
+                                Choose your preferred embed style above and copy the code using the "Copy embed code" button.
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-4">
+                            <div className="w-8 h-8 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-white font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b] mb-2">Paste in your website</h4>
+                              <p className="text-[#5f5f7a] text-sm">
+                                Add the code to your website's HTML where you want the badge or widget to appear (typically in the footer or sidebar).
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-4">
+                            <div className="w-8 h-8 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-white font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b] mb-2">Publish and enjoy</h4>
+                              <p className="text-[#5f5f7a] text-sm">
+                                Save your changes and publish your website. The embed will automatically display and stay up-to-date.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Benefits */}
+                    <Card className="bg-gradient-to-r from-[#f8f9ff] to-[#ede9fe] border-[#7c5fff]">
+                      <CardContent className="p-6">
+                        <h3 className="text-xl font-bold text-[#22223b] mb-4">Why use Toolify embeds?</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex items-start gap-3">
+                            <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <Check size={14} className="text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b]">Build Trust</h4>
+                              <p className="text-[#5f5f7a] text-sm">Show visitors you're featured on a trusted platform</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <Check size={14} className="text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b]">Increase Traffic</h4>
+                              <p className="text-[#5f5f7a] text-sm">Drive more visitors to your tool listing</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <Check size={14} className="text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b]">Easy Setup</h4>
+                              <p className="text-[#5f5f7a] text-sm">Simple copy-paste installation</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <div className="w-6 h-6 bg-[#7c5fff] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                              <Check size={14} className="text-white" />
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#22223b]">Always Updated</h4>
+                              <p className="text-[#5f5f7a] text-sm">Automatically reflects latest ratings and reviews</p>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </ScrollArea>
+              </div>
+            )}
+
             {activeTab === 'Alternatives' && relatedTools.length > 0 && (
               <div>
                 <h2 className="text-2xl font-bold text-[#22223b] mb-6">Similar Tools</h2>
@@ -1344,7 +1651,7 @@ const ToolDetail = () => {
             )}
 
             {/* Default content for other tabs */}
-            {!['Product Information', 'Reviews', 'Pricing', 'Analytics', 'Social Listening', 'Alternatives'].includes(activeTab) && (
+            {!['Product Information', 'Reviews', 'Pricing', 'Analytics', 'Social Listening', 'Embed', 'Alternatives'].includes(activeTab) && (
               <div className="text-center py-12">
                 <p className="text-[#5f5f7a]">Content for {activeTab} coming soon.</p>
               </div>
