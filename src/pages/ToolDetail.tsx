@@ -30,6 +30,119 @@ const ToolDetail = () => {
   // Mock data for different tools based on toolId
   const getToolData = (id: string) => {
     const toolsData = {
+      'seoing': {
+        name: 'seo.ing',
+        description: 'AI SEO writing tool for generating high-ranking articles quickly.',
+        longDescription: 'seo.ing is an advanced AI-powered SEO writing tool designed to help content creators, marketers, and businesses generate high-ranking articles quickly and efficiently. The platform combines artificial intelligence with SEO best practices to create content that not only engages readers but also performs well in search engine rankings.',
+        website: 'https://seo.ing',
+        pricing: 'Free / $19 per month',
+        category: 'SEO Tool',
+        tags: ['SEO', 'Content Writing', 'AI', 'Article Generation', 'Marketing'],
+        logo: '/placeholder.svg',
+        isFree: true,
+        rating: 4.7,
+        users: '50K+',
+        founded: '2023',
+        monthlyVisitors: '500K',
+        addedOn: 'Mar 15 2024',
+        productInfo: {
+          whatIs: 'seo.ing is an AI SEO writing tool that helps users create high-ranking articles quickly. It combines advanced artificial intelligence with proven SEO strategies to generate content that performs well in search engines while maintaining readability and engagement for human readers.',
+          howToUse: 'To use seo.ing, simply enter your target keywords or topic, choose your content type and length preferences, and let the AI generate SEO-optimized articles. The tool provides suggestions for headlines, meta descriptions, and content structure to maximize search engine visibility.'
+        },
+        features: [
+          'AI-powered content generation',
+          'SEO optimization suggestions',
+          'Keyword research and analysis',
+          'Content structure recommendations',
+          'Meta description generation',
+          'Headline optimization',
+          'Readability analysis',
+          'Competitor content analysis',
+          'Multiple content formats support',
+          'Integration with popular CMS platforms'
+        ],
+        useCases: [
+          {
+            number: 1,
+            title: 'Creating blog posts that rank high in search results'
+          },
+          {
+            number: 2,
+            title: 'Generating product descriptions for e-commerce websites'
+          },
+          {
+            number: 3,
+            title: 'Writing landing page content optimized for conversions'
+          },
+          {
+            number: 4,
+            title: 'Creating content marketing materials for social media'
+          },
+          {
+            number: 5,
+            title: 'Developing comprehensive content strategies for businesses'
+          }
+        ],
+        faq: [
+          {
+            question: 'How does seo.ing ensure content ranks well in search engines?',
+            answer: 'seo.ing uses advanced AI algorithms trained on successful SEO content and current search engine guidelines to optimize content structure, keyword density, and readability scores.'
+          },
+          {
+            question: 'Can I customize the writing style and tone?',
+            answer: 'Yes, seo.ing allows you to adjust writing style, tone, and target audience to match your brand voice and content requirements.'
+          },
+          {
+            question: 'Does seo.ing support multiple languages?',
+            answer: 'Currently, seo.ing primarily supports English content generation, with plans to expand to other languages in future updates.'
+          },
+          {
+            question: 'How accurate is the SEO analysis?',
+            answer: 'Our SEO analysis is based on current best practices and is regularly updated to reflect changes in search engine algorithms and ranking factors.'
+          }
+        ],
+        contact: {
+          supportEmail: 'support@seo.ing',
+          website: 'https://seo.ing',
+          loginUrl: 'https://seo.ing/login',
+          signupUrl: 'https://seo.ing/signup',
+          linkedinUrl: 'https://www.linkedin.com/company/seo-ing',
+          twitterUrl: 'https://twitter.com/seo_ing',
+          instagramUrl: ''
+        },
+        pros: [
+          'Fast AI-powered content generation',
+          'Built-in SEO optimization',
+          'User-friendly interface',
+          'Free tier available',
+          'Regular algorithm updates'
+        ],
+        cons: [
+          'Limited to English language',
+          'Requires manual review for accuracy',
+          'Premium features require subscription'
+        ],
+        alternatives: [
+          {
+            name: 'Jasper AI',
+            description: 'AI writing assistant for marketing copy and content',
+            rating: 4.5,
+            users: '100K+',
+            pricing: '$29/month',
+            features: ['Multiple templates', 'Team collaboration', 'Brand voice'],
+            logo: '/placeholder.svg'
+          },
+          {
+            name: 'Copy.ai',
+            description: 'AI-powered copywriting tool for various content types',
+            rating: 4.4,
+            users: '80K+',
+            pricing: 'Free / $36/month',
+            features: ['Multiple languages', 'Templates library', 'Team workspace'],
+            logo: '/placeholder.svg'
+          }
+        ]
+      },
       'thunai': {
         name: 'Thunai',
         description: 'Agentic AI Platform with a self-learning brain that transforms organizational knowledge into smart AI agents.',
