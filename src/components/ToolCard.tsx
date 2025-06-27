@@ -124,7 +124,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       'online audio converter': 'https://cdn-images.toolify.ai/website-logos/20250411/1744351314_95970516_26239.webp',
       mediaai: 'https://cdn-images.toolify.ai/website-logos/20250411/1744350939_84156828_24396.webp',
       'media ai generator': 'https://cdn-images.toolify.ai/website-logos/20250411/1744350939_84156828_24396.webp',
-      voicemod: '', // No URL provided
+      voicemod: '',
 
       // Voice Generation & Conversion
       turboscribe: 'https://cdn-images.toolify.ai/website-logos/20250410/1744268072_96151101_8800.webp',
@@ -231,7 +231,7 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       anthropic: 'https://cdn-images.toolify.ai/website-logos/20250411/1744351951_92717609_11068.webp',
       zapier: 'https://cdn-images.toolify.ai/website-logos/20250410/1744268087_59394397_8860.webp',
       tawk: 'https://cdn-images.toolify.ai/website-logos/20250410/1744257788_10553097_11357.webp',
-      'tawk.to hire chat agents': '  https://cdn-images.toolify.ai/website-logos/20250410/1744257788_10553097_11357.webp',
+      'tawk.to hire chat agents': 'https://cdn-images.toolify.ai/website-logos/20250410/1744257788_10553097_11357.webp',
       windsurf: 'https://cdn-images.toolify.ai/website-logos/20250411/1744351278_45771206_26077.webp',
       klaviyo: 'https://cdn-images.toolify.ai/website-logos/20250410/1744268165_72273679_9133.webp',
 
