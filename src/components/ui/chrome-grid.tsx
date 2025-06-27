@@ -1,4 +1,3 @@
-
 'use client'
 
 import React, { useRef, useState, useMemo, useEffect } from 'react'
@@ -108,13 +107,13 @@ const Box = ({
             rotation={[Math.PI / 2, 0, 0]}
         >
             <meshPhysicalMaterial 
-                color="#232323" 
-                roughness={0.5} 
-                metalness={1}
-                clearcoat={1}
-                clearcoatRoughness={0}
-                clearcoatNormalScale={1}
-                clearcoatNormalMap={null}
+                args={[{
+                    color: "#232323",
+                    roughness: 0.5,
+                    metalness: 1,
+                    clearcoat: 1,
+                    clearcoatRoughness: 0
+                }]}
             />
         </mesh>
     );
