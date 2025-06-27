@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useCallback, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   Code,
@@ -99,7 +99,7 @@ const GAPS = {
   xl: "gap-10",
 } as const;
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, scale: 0.98 },
   visible: {
     opacity: 1,
@@ -108,19 +108,19 @@ const containerVariants = {
       staggerChildren: 0.08,
       delayChildren: 0.2,
       duration: 0.5,
-      ease: [0.23, 1, 0.32, 1],
+      ease: [0.23, 1, 0.32, 1] as any,
     },
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 40, rotateX: -15, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
     rotateX: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 100, damping: 12, mass: 0.7 },
+    transition: { type: "spring" as const, stiffness: 100, damping: 12, mass: 0.7 },
   },
 };
 
@@ -465,7 +465,7 @@ const Card3DList: React.FC<Card3DListProps> = ({
   const gridClass = useMemo(() => GRIDS[columns], [columns]);
   const gapClass = useMemo(() => GAPS[gap], [gap]);
 
-  const customVariants = useMemo(
+  const customVariants: Variants = useMemo(
     () => ({
       ...containerVariants,
       visible: {
